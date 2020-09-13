@@ -1,0 +1,9 @@
+GET http://localhost:5000/auth/signup
+###
+POST http://localhost:5000/auth/signup
+Content-Type: application/json
+
+{
+    "username":"dnjsskarb7",
+    "password":"12kaaas"
+}
