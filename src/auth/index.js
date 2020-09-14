@@ -10,10 +10,10 @@ const schema = Joi.object({
     .trim()
     .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
     .required(),
-  confirmPassword: Joi.string()
-    .trim()
-    .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-    .required(),
+  email: Joi.string().email().required(),
+  dateofbirth: Joi.string().alphanum(),
+  month: Joi.number().integer().min(1).max(12),
+  year: Joi.number().integer().min(1900).max(2013),
 });
 
 router.get("/signup", (req, res) => {
@@ -25,12 +25,12 @@ router.post("/signup", async (req, res, next) => {
   const result = schema.validate({
     username: req.body.username,
     password: req.body.password,
-    confirmPassword: req.body.confirmPassword,
-    // email:
-    dateofbirth: Number(req.body.dateofbirth),
-    month: Number(req.body.month),
-    year: Number(req.body.year),
+    email: req.body.email,
+    dateofbirth: req.body.dateofbirth,
+    month: req.body.month,
+    year: req.body.year,
   });
+  console.log(result);
   if (result.error === undefined) {
     signupUsers
       .findOne({
@@ -46,6 +46,11 @@ router.post("/signup", async (req, res, next) => {
             const newUser = {
               username: req.body.username,
               password: hashedPassword,
+              email: req.body.email,
+              dateofbirth: req.body.dateofbirth,
+              month: req.body.month,
+              year: req.body.year,
+            
             };
             new signupUsers(newUser).save().then((completedNewUser) => {
               completedNewUser.password = "your password is secured";
