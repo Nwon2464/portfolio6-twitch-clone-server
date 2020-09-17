@@ -12,7 +12,7 @@ const authRoutes = require("./auth");
 const middlewares = require("./middlewares");
 
 const app = express();
-
+const tokenMiddleware = require("./auth/middleware");
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, //1day for authorized cookie
@@ -41,10 +41,11 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-
+app.use(tokenMiddleware.checkTokenSetUser);
 app.get("/", (req, res) => {
   res.json({
     message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
+    user: req.user,
   });
 });
 

@@ -4,11 +4,7 @@ POST http://localhost:5000/auth/signup
 Content-Type: application/json
 
 {
-    "username":"dnjsskarb123",
-    "password":"dnjsskarb123",
-    "email":"dnjsskarb123@gmail.com",
-    "dateofbirth": "mar",
-    "month": "11",
-    "year": "1993"
-  
+    "username":"dnjsskarb123df",
+    "password":"dnjsskarb123df",
+    "email":"dnjsskarb123@gmail.com"
 }
