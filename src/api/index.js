@@ -1074,11 +1074,6 @@ router.get("/twitch/fallguys", async (req, res) => {
             _.merge(allStreams, imageUrl);
             _.merge(allStreams, gameName);
 
-            allStreams.map((e) => {
-              if (e.localization_names.length !== 0) {
-                e.localization_names.map((e) => {});
-              }
-            });
             res.send(allStreams);
           })
         );
@@ -1090,4 +1085,149 @@ router.get("/twitch/fallguys", async (req, res) => {
 
 // router.use("/emojis", emojis);
 
+router.get("/twitch/streams/:id", async (req, res) => {
+  try {
+    const response = await axios.post(
+      `https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
+    );
+    const token = response.data.access_token;
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "client-id": client_id,
+      },
+    };
+
+    if (token) {
+      const getStreamsRequest = await axios.get(
+        `https://api.twitch.tv/helix/streams?game_id=${req.params.id}&first=50`,
+        options
+      );
+
+      const getTopGames = await axios.get(
+        `https://api.twitch.tv/helix/games?id=${req.params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "client-id": client_id,
+          },
+        }
+      );
+
+      const topGames = getTopGames.data.data;
+      const sliced = getStreamsRequest.data.data.slice();
+      const totalViews = getStreamsRequest.data.data
+        .map((el) => el.viewer_count)
+        .reduce((acc, curr) => {
+          return acc + curr;
+        });
+      //
+      const profileImage = getStreamsRequest.data.data.slice();
+      console.log(topGames);
+      let vr = profileImage.map((e) => {
+        return axios.get(
+          `https://api.twitch.tv/helix/users?id=${e.user_id}`,
+          options
+        );
+      });
+
+      let imageResult = await axios.all(vr);
+      let ta2 = [];
+      imageResult.map((e) => {
+        e.data.data.map((e) => {
+          ta2.push({
+            profile_image_url: e.profile_image_url,
+            userTotalChannelViewCount: e.view_count,
+            description: e.description,
+          });
+        });
+      });
+      // console.log(ta2);
+      _.merge(sliced, ta2);
+      //
+      // let tags = [];
+      let ar = getStreamsRequest.data.data.map((data) => {
+        // console.log("------------>",data.tag_ids[0]);
+        return axios.get(
+          `https://api.twitch.tv/helix/tags/streams?tag_id=${data.tag_ids[0]}`,
+          options
+        );
+      });
+      let result = await axios.all(ar);
+      let ta = [];
+      result.map((e) => {
+        e.data.data.map((e) => {
+          ta.push({ tag: e.localization_names["en-us"] });
+        });
+      });
+      _.merge(sliced, ta);
+      res.json({ selectedGame: topGames, totalViews, streams: sliced });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+router.get("/twitch/streams/user/:id", async (req, res) => {
+  try {
+    const response = await axios.post(
+      `https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
+    );
+    const token = response.data.access_token;
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "client-id": client_id,
+      },
+    };
+
+    if (token) {
+      const getStreamsRequest = await axios.get(
+        `https://api.twitch.tv/helix/videos?user_id=${req.params.id}&first=50`,
+        options
+      );
+
+      // console.log(getStreamsRequest.data.data);
+      // const getTopGames = await axios.get(
+      //   `https://api.twitch.tv/helix/videos?id=${req.params.id}`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       "client-id": client_id,
+      //     },
+      //   }
+      // );
+      res.json({ streams: getStreamsRequest.data.data });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get("/twitch/categories/all", async (req, res) => {
+  try {
+    const response = await axios.post(
+      `https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
+    );
+    const token = response.data.access_token;
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "client-id": client_id,
+      },
+    };
+
+    if (token) {
+      const getStreamsRequest = await axios.get(
+        `https://api.twitch.tv/helix/games/top?first=50`,
+        options
+      );
+      let topGames = getStreamsRequest.data.data.slice();
+      res.json({ topGames });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 module.exports = router;
+// /twitch/streams/req.params
