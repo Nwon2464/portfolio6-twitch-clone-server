@@ -33,7 +33,7 @@ const createTokenSendResponse = (user, res, next) => {
     payload,
     process.env.JWT_SECRET,
     {
-      expiresIn: "1d",
+      expiresIn: "7d",
     },
     (error, token) => {
       if (error) {
@@ -154,6 +154,5 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
   res.redirect("/");
   // res.send(req.user);
 });
-
 
 module.exports = router;

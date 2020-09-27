@@ -7,7 +7,9 @@ const checkTokenSetUser = (req, res, next) => {
       console.log("yes");
       jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
         if (error) {
+          console.log("errorNAME ===", error.name);
           console.log(error);
+          
         }
         console.log("--->", user);
         req.user = user;

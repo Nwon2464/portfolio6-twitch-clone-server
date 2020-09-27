@@ -1,10 +1,11 @@
-GET http://localhost:5000/api/v1/twitch/streams/509658
+GET http://localhost:5000/api/v1/twitch/streams
 ###
-POST http://localhost:5000/
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-    "username":"dnjsskarb123df",
-    "password":"dnjsskarb123df",
+    "username":"dnjsskarb123",
+    "password":"dnjsskarb123",
     "email":"dnjsskarb123@gmail.com"
 }
+###
