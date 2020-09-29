@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/v1/twitch/categories/all
+GET http://localhost:5000/api/v1/twitch/streams
 ###
 POST http://localhost:5000/auth/login
 Content-Type: application/json

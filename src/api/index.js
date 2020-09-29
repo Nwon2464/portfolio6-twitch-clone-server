@@ -638,10 +638,11 @@ router.get("/twitch/streams", async (req, res, next) => {
       let topGames = newTopGamesRequest.map((e) => {
         // console.log(e);
         return axios.get(
-          `https://api.twitch.tv/helix/streams?game_id=${e.id}`,
+          `https://api.twitch.tv/helix/streams?game_id=${e.id}&first=100`,
           options
         );
       });
+
       let empty_topGames = [];
       //
       let topGames_fetched = await axios.all(topGames);
@@ -755,7 +756,7 @@ router.get("/twitch/streams/:id", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
-        `https://api.twitch.tv/helix/streams?game_id=${req.params.id}&first=50`,
+        `https://api.twitch.tv/helix/streams?game_id=${req.params.id}&first=100`,
         options
       );
 
@@ -851,7 +852,7 @@ router.get("/twitch/streams/user/:id", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
-        `https://api.twitch.tv/helix/videos?user_id=${req.params.id}&first=50`,
+        `https://api.twitch.tv/helix/videos?user_id=${req.params.id}&first=100`,
         options
       );
       const totalViews = getStreamsRequest.data.data
@@ -886,7 +887,7 @@ router.get("/twitch/categories/all", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
-        `https://api.twitch.tv/helix/games/top?first=50`,
+        `https://api.twitch.tv/helix/games/top?first=100`,
         options
       );
       let topGames = getStreamsRequest.data.data.slice();
@@ -896,7 +897,7 @@ router.get("/twitch/categories/all", async (req, res) => {
       let imageChanged = topGames.map((e) => {
         // console.log(e);
         return axios.get(
-          `https://api.twitch.tv/helix/streams?game_id=${e.id}`,
+          `https://api.twitch.tv/helix/streams?game_id=${e.id}&first=100`,
           options
         );
       });
@@ -904,6 +905,7 @@ router.get("/twitch/categories/all", async (req, res) => {
       //
       let topGames_fetched = await axios.all(imageChanged);
       topGames_fetched.map((e) => {
+        console.log(e.data.data);
         empty_topGames.push({
           gameViewers: e.data.data
             .map((e) => e.viewer_count)
