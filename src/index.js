@@ -23,17 +23,17 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// mongoose.connect(process.env.MONGO_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useFindAndModify: false,
-//   useCreateIndex: true,
-// });
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
 
-// const db = mongoose.connection;
-// db.once("open", () => {
-//   console.log("👏👏👏👏👏👏 Mongo DB Atlas has been connected! 👏👏👏👏👏👏");
-// });
+const db = mongoose.connection;
+db.once("open", () => {
+  console.log("👏👏👏👏👏👏 Mongo DB Atlas has been connected! 👏👏👏👏👏👏");
+});
 // AIzaSyBoGacSo3I4Ns7Y756tGfw0YZueRclQZ8g google
 //clientid 1090803691910-jmqgsf3e6u0rboqudlhdg28gc7b482di.apps.googleusercontent.com
 //client-secret 4E6h8hGTNKocXYHqnudpZhiC
