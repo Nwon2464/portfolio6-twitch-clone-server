@@ -5,13 +5,6 @@ const _ = require("lodash");
 // const Twitch = require("../schemas/twitch");
 const router = express.Router();
 
-// router.get('/', (req, res) => {
-//   res.json({
-//     message: 'API - 👋🌎🌍🌏'
-//   });
-// });
-//secret = 9dlqnz21f080c13zbajb908m8n4mb4
-
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 // CLIENT_ID = "otpjthd6a9addxg5qqv04x24yzo861"
@@ -47,7 +40,7 @@ router.get("/twitch", async (req, res) => {
       // console.log("Token inflow");
       const newStreamsData = getStreamsRequest.data.data;
       let allStreams = newStreamsData.slice();
-      let urls= [],user_urls=[],user_tags=[];
+      let urls= [],user_urls=[];
       // console.log(newStreamsData);
       for(let i =0;i<5;i++ ) {
         urls.push(`https://api.twitch.tv/helix/channels?broadcaster_id=${newStreamsData[i].user_id}`);  
@@ -55,7 +48,7 @@ router.get("/twitch", async (req, res) => {
         // user_tags.push(`https://api.twitch.tv/helix/tags/streams`);
       }
       // console.log(urls,user_urls);
-    
+      console.log(allStreams);
   
       const promise1 = axios.get(urls[0], options);
       const promise2 = axios.get(urls[1], options);
