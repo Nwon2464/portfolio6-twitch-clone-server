@@ -7,9 +7,14 @@
       "use": "@now/node-server"
     }
   ],
-  "routes": [{ "src": "/.*", "dest": "src/index.js" }],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.js"
+    }
+  ],
   "env": {
-    "NODE_ENV": "production",
+    "NODE_ENV": "deployment",
     "PORT": "5000",
     "MONGO_URI": "@backend-db",
     "CLIENT_ID": "@client_id",
