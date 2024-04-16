@@ -12,8 +12,10 @@ const router = express.Router();
 // });
 //secret = 9dlqnz21f080c13zbajb908m8n4mb4
 
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
+// const client_id = process.env.CLIENT_ID;
+// const client_secret = process.env.CLIENT_SECRET;
+const client_id= "otpjthd6a9addxg5qqv04x24yzo861"
+const client_secret = "yjmcacd1c2r4w0dxwsglvfxujo5fuy"
 
 router.get("/twitch", async (req, res) => {
   console.log(client_id);
