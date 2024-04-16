@@ -5,6 +5,7 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const signupUsers = require("../models/signup");
 
+const JWT_SECRET="abcdefghijkmnlop";
 const signUpSchema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
   password: Joi.string()
@@ -31,7 +32,7 @@ const createTokenSendResponse = (user, res, next) => {
   };
   jwt.sign(
     payload,
-    process.env.JWT_SECRET,
+    JWT_SECRET,
     {
       expiresIn: "7d",
     },

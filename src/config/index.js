@@ -2,6 +2,8 @@ const passport = require("passport");
 const chalk = require("chalk");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const Users = require("../models/user");
+const GOOGLE_CLIENT_ID="104901537063-ce1q2og53ifsa98lhhnued019v03o9sn.apps.googleusercontent.com"
+const GOOGLE_CLIENT_SECRET="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"
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -15,8 +17,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/redirect",
     },
     (accessToken, refreshToken, profile, done) => {
