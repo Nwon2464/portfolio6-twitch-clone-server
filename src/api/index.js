@@ -14,12 +14,12 @@ const router = express.Router();
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
-// let token = [];
 
 router.get("/twitch", async (req, res) => {
+  console.log(client_id);
   try {
     const response = await axios.post(
-      `https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${process.env.CLIENT_SECRET}&grant_type=client_credentials`
+      `https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
     );
     const token = response.data.access_token;
     const options = {
@@ -29,10 +29,10 @@ router.get("/twitch", async (req, res) => {
       },
     };
 
-    
+    console.log(token, "token");
     if (token) {
     
-      // console.log("WERWEREWREWR",token);
+      console.log("WERWEREWREWR",token);
       const getStreamsRequest = await axios.get(
         "https://api.twitch.tv/helix/streams?first=5",
         {

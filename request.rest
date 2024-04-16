@@ -1,6 +1,6 @@
-GET http://localhost:5000/api/v1/twitch/streams
+GET http://localhost:3000/api/v1/twitch/streams
 ###
-POST http://localhost:5000/auth/login
+POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {

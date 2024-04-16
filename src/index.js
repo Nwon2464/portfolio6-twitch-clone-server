@@ -55,6 +55,6 @@ app.use("/auth", authRoutes);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on ${process.env.PORT}...👀`);
 });
