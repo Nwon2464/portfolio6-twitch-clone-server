@@ -12,22 +12,18 @@ const authRoutes = require("./auth");
 const middlewares = require("./middlewares");
 const tokenMiddleware = require("./auth/middleware");
 
-
-const COOKIE_KEY="abcdefg";
-const MONGO_URI="mongodb://dnjsskarb7:Ion2ikgWF7g0oeg8@ac-xsgbecx-shard-00-00.bjecozp.mongodb.net:27017,ac-xsgbecx-shard-00-01.bjecozp.mongodb.net:27017,ac-xsgbecx-shard-00-02.bjecozp.mongodb.net:27017/?ssl=true&replicaSet=atlas-52w0vh-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0";
-const PORT = 3000;
 const app = express();
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, //1day for authorized cookie
-    keys: [COOKIE_KEY],
+    keys: [process.env.COOKIE_KEY],
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect(MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -59,6 +55,6 @@ app.use("/auth", authRoutes);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
-app.listen(PORT || 3000, () => {
-  console.log(`Listening on ${PORT}...👀`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Listening on ${process.env.PORT}...👀`);
 });
