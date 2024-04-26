@@ -806,11 +806,7 @@ router.get("/twitch/minecraft", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
-<<<<<<< HEAD
         "https://api.twitch.tv/helix/streams?game_id=27471&first=9",
-=======
-        `https://api.twitch.tv/helix/streams?game_id=${req.params.id}&first=50`,
->>>>>>> parent of fa0ad04 (deployed)
         options
       );
 
@@ -967,11 +963,7 @@ router.get("/twitch/fortnite", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
-<<<<<<< HEAD
         "https://api.twitch.tv/helix/streams?game_id=33214&first=8",
-=======
-        `https://api.twitch.tv/helix/videos?user_id=${req.params.id}&first=50`,
->>>>>>> parent of fa0ad04 (deployed)
         options
       );
 
@@ -1126,15 +1118,11 @@ router.get("/twitch/chat", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
-<<<<<<< HEAD
-        "https://api.twitch.tv/helix/streams?game_id=509658&first=8",
-=======
-        `https://api.twitch.tv/helix/games/top?first=50`,
->>>>>>> parent of fa0ad04 (deployed)
+        "https://api.twitch.tv/helix/streams?gae_id=509658&first=8",
+
         options
       );
 
-<<<<<<< HEAD
       const newStreamsData = getStreamsRequest.data.data;
       // --------------------
       let allStreams = newStreamsData.slice();
@@ -1266,7 +1254,7 @@ router.get("/twitch/chat", async (req, res) => {
             res.send(allStreams);
           })
         );
-=======
+
       let imageChanged = topGames.map((e) => {
         // console.log(e);
         return axios.get(
@@ -1286,7 +1274,6 @@ router.get("/twitch/chat", async (req, res) => {
       });
       _.merge(topGames, empty_topGames);
       res.json({ topGames });
->>>>>>> parent of fa0ad04 (deployed)
     }
   } catch (error) {
     console.log("ERROR939");
