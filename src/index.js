@@ -6,22 +6,22 @@ const cors = require("cors");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 require("dotenv").config();
-require("./config");
+// require("./config");
 const api = require("./api");
-const authRoutes = require("./auth");
+// const authRoutes = require("./auth");
 const middlewares = require("./middlewares");
 
 const app = express();
 
-app.use(
-  cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, //1day for authorized cookie
-    keys: [process.env.COOKIE_KEY],
-  })
-);
+// app.use(
+//   cookieSession({
+//     maxAge: 24 * 60 * 60 * 1000, //1day for authorized cookie
+//     keys: [process.env.COOKIE_KEY],
+//   })
+// );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // mongoose.connect(process.env.MONGO_URI, {
 //   useNewUrlParser: true,
@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1", api);
-app.use("/auth", authRoutes);
+// app.use("/auth", authRoutes);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
