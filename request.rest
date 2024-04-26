@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 GET http://localhost:3000/api/v1/twitch/streams
+=======
+GET http://localhost:5000/api/v1/twitch/categories/all
+>>>>>>> parent of fa0ad04 (deployed)
 ###
 POST http://localhost:3000/auth/login
 Content-Type: application/json

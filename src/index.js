@@ -10,9 +10,9 @@ require("./config");
 const api = require("./api");
 const authRoutes = require("./auth");
 const middlewares = require("./middlewares");
-const tokenMiddleware = require("./auth/middleware");
 
 const app = express();
+
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, //1day for authorized cookie
@@ -41,12 +41,10 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use(tokenMiddleware.checkTokenSetUser);
+
 app.get("/", (req, res) => {
-  console.log(req.user);
   res.json({
     message: "🦄🌈✨👋🌎🌍🌏✨🌈🦄",
-    user: req.user,
   });
 });
 
@@ -55,6 +53,6 @@ app.use("/auth", authRoutes);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`Listening on ${process.env.PORT}...👀`);
 });

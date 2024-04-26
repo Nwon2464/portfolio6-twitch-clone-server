@@ -667,11 +667,10 @@ router.get("/twitch/streams", async (req, res, next) => {
       let topGames = newTopGamesRequest.map((e) => {
         // console.log(e);
         return axios.get(
-          `https://api.twitch.tv/helix/streams?game_id=${e.id}&first=100`,
+          `https://api.twitch.tv/helix/streams?game_id=${e.id}`,
           options
         );
       });
-
       let empty_topGames = [];
       //
       let topGames_fetched = await axios.all(topGames);
@@ -807,7 +806,11 @@ router.get("/twitch/minecraft", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
+<<<<<<< HEAD
         "https://api.twitch.tv/helix/streams?game_id=27471&first=9",
+=======
+        `https://api.twitch.tv/helix/streams?game_id=${req.params.id}&first=50`,
+>>>>>>> parent of fa0ad04 (deployed)
         options
       );
 
@@ -964,7 +967,11 @@ router.get("/twitch/fortnite", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
+<<<<<<< HEAD
         "https://api.twitch.tv/helix/streams?game_id=33214&first=8",
+=======
+        `https://api.twitch.tv/helix/videos?user_id=${req.params.id}&first=50`,
+>>>>>>> parent of fa0ad04 (deployed)
         options
       );
 
@@ -1119,10 +1126,15 @@ router.get("/twitch/chat", async (req, res) => {
 
     if (token) {
       const getStreamsRequest = await axios.get(
+<<<<<<< HEAD
         "https://api.twitch.tv/helix/streams?game_id=509658&first=8",
+=======
+        `https://api.twitch.tv/helix/games/top?first=50`,
+>>>>>>> parent of fa0ad04 (deployed)
         options
       );
 
+<<<<<<< HEAD
       const newStreamsData = getStreamsRequest.data.data;
       // --------------------
       let allStreams = newStreamsData.slice();
@@ -1254,6 +1266,27 @@ router.get("/twitch/chat", async (req, res) => {
             res.send(allStreams);
           })
         );
+=======
+      let imageChanged = topGames.map((e) => {
+        // console.log(e);
+        return axios.get(
+          `https://api.twitch.tv/helix/streams?game_id=${e.id}`,
+          options
+        );
+      });
+      let empty_topGames = [];
+      //
+      let topGames_fetched = await axios.all(imageChanged);
+      topGames_fetched.map((e) => {
+        empty_topGames.push({
+          gameViewers: e.data.data
+            .map((e) => e.viewer_count)
+            .reduce((acc, cur) => acc + cur, 0),
+        });
+      });
+      _.merge(topGames, empty_topGames);
+      res.json({ topGames });
+>>>>>>> parent of fa0ad04 (deployed)
     }
   } catch (error) {
     console.log("ERROR939");
