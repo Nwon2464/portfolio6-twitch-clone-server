@@ -10,6 +10,8 @@ const client_secret = process.env.CLIENT_SECRET;
 // CLIENT_ID = "otpjthd6a9addxg5qqv04x24yzo861"
 // CLIENT_SECRET = "yjmcacd1c2r4w0dxwsglvfxujo5fuy"
 
+
+
 router.get("/twitch", async (req, res) => {
   console.log(client_id);
   try {
